@@ -1,4 +1,3 @@
-
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,24 +8,55 @@ from .models import Crop, Resource, Activity
 from .serializers import CropSerializer, ResourceSerializer, ActivitySerializer
 
 class CropListCreate(generics.ListCreateAPIView):
-    queryset = Crop.objects.all()
     serializer_class = CropSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Crop.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class CropDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Crop.objects.all()
     serializer_class = CropSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return Crop.objects.filter(user=self.request.user)
+
 class ResourceListCreate(generics.ListCreateAPIView):
-    queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return Resource.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class ResourceDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ResourceSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Resource.objects.filter(user=self.request.user)
+
 class ActivityListCreate(generics.ListCreateAPIView):
-    queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Activity.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class ActivityDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ActivitySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Activity.objects.filter(user=self.request.user)
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
