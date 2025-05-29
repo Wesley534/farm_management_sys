@@ -31,6 +31,38 @@ cd farm_management_sys
 ---
 
 ## 🔧 Backend Setup (Django)
+### 🐘 PostgreSQL Configuration
+
+Make sure PostgreSQL is running and a database named `farmdb` exists.
+
+### .env file:
+
+```env
+DEBUG=True
+SECRET_KEY=your-secret-key
+ALLOWED_HOSTS=127.0.0.1,localhost
+
+DB_NAME=farmdb
+DB_USER=your_postgres_username
+DB_PASSWORD=your_postgres_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+
+
+Create the database using:
+
+```bash
+psql -U your_postgres_username
+```
+
+```sql
+CREATE DATABASE farmdb;
+\q
+```
+
+---
 
 ### 2. Navigate to the Backend Directory
 
@@ -54,8 +86,6 @@ pip install -r requirements.txt
 ### 5. Configure Environment Variables
 
 Create a `.env` file in the `farm-management` directory using the .env.example file provided
-
-
 
 > **Note:** Never commit your `.env` file to version control. Ensure `.gitignore` includes `.env`.
 
@@ -92,8 +122,6 @@ cd ../fms
 npm install
 ```
 
-
-
 ### 10. Start the React Development Server
 
 ```bash
@@ -103,9 +131,6 @@ npm run dev
 The frontend will run at: [http://localhost:5173/](http://localhost:5173/)
 
 ---
-
-
-
 
 ## 🛠 Troubleshooting
 
@@ -121,7 +146,9 @@ The frontend will run at: [http://localhost:5173/](http://localhost:5173/)
 
 ---
 
+
+
 ## 📬 Contact
 
 For questions, suggestions, or issues, feel free to reach out:  
-📧 [peterwesley484@gmail.com](mailto:peterwesley484@gmail.com)  
+📧 [peterwesley484@gmail.com](mailto:peterwesley484@gmail.com)
