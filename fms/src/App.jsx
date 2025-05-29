@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Crops from './pages/Crops';
 import Resources from './pages/Resources';
 import Activities from './pages/Activities';
+import Notifications from './pages/Notifications';
 
 // Axios interceptor for token
 axios.interceptors.request.use(
@@ -59,6 +60,10 @@ const App = () => {
           <Route
             path="/activities"
             element={token ? <Activities /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/notifications"
+            element={token ? <Notifications /> : <Navigate to="/login" />}
           />
         </Route>
         <Route path="/" element={<Navigate to="/login" />} />

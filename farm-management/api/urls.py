@@ -6,6 +6,8 @@ from .views import (
     ResourceDetail,
     ActivityListCreate,
     ActivityDetail,
+    NotificationList,
+    NotificationMarkRead,
     LoginView,
 )
 
@@ -17,4 +19,6 @@ urlpatterns = [
     path('resources/<int:pk>/', ResourceDetail.as_view(), name='resource-detail'),
     path('activities/', ActivityListCreate.as_view(), name='activity-list-create'),
     path('activities/<int:pk>/', ActivityDetail.as_view(), name='activity-detail'),
+    path('notifications/', NotificationList.as_view(), name='notification-list'),
+    path('notifications/<int:pk>/read/', NotificationMarkRead.as_view(), name='notification-mark-read'),
 ]

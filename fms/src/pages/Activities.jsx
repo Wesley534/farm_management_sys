@@ -8,7 +8,7 @@ const Activities = () => {
     id: null,
     description: '',
     date: '',
-    crop: '',
+    crop_id: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,7 +24,7 @@ const Activities = () => {
       const response = await axios.get('http://localhost:8000/api/crops/');
       setCrops(response.data);
     } catch (err) {
-      setError('Failed to fetch crops');
+      setError('Failed to fetch your crops');
     }
   };
 
@@ -34,7 +34,7 @@ const Activities = () => {
       const response = await axios.get('http://localhost:8000/api/activities/');
       setActivities(response.data);
     } catch (err) {
-      setError('Failed to fetch activities');
+      setError('Failed to fetch your activities');
     } finally {
       setIsLoading(false);
     }
@@ -51,13 +51,14 @@ const Activities = () => {
     setError('');
     setSuccess('');
 
-    try {
-      const data = {
-        description: form.description,
-        date: form.date,
-        crop: form.crop,
-      };
+    const data = {
+      description: form.description,
+      date: form.date,
+      crop_id: form.crop_id,
+    };
+    console.log('POST payload:', data); // Debug payload
 
+    try {
       if (form.id) {
         await axios.put(`http://localhost:8000/api/activities/${form.id}/`, data);
         setSuccess('Activity updated successfully!');
@@ -66,9 +67,10 @@ const Activities = () => {
         setSuccess('Activity added successfully!');
       }
       fetchActivities();
-      setForm({ id: null, description: '', date: '', crop: '' });
+      setForm({ id: null, description: '', date: '', crop_id: '' });
     } catch (err) {
-      setError(err.response?.data?.detail || 'Operation failed');
+      console.error('POST error response:', err.response?.data); // Debug error
+      setError(err.response?.data?.detail || Object.values(err.response?.data || {}).join(' ') || 'Operation failed');
     } finally {
       setIsLoading(false);
     }
@@ -79,7 +81,7 @@ const Activities = () => {
       id: activity.id,
       description: activity.description,
       date: activity.date,
-      crop: activity.crop.id,
+      crop_id: activity.crop.id,
     });
   };
 
@@ -100,7 +102,7 @@ const Activities = () => {
 
   return (
     <div className="w-full max-w-4xl p-6 bg-white rounded-xl shadow-lg mx-auto">
-      <h2 className="text-3 font-bold text-gray-900 mb-6 text-center uppercase font-sans">
+      <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center uppercase font-sans">
         Activity Tracker
       </h2>
       <div aria-live="polite">
@@ -130,7 +132,7 @@ const Activities = () => {
               onChange={handleInputChange}
               className="w-full p-3 border border-green-500 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm font-sans"
               required
-                disabled={isLoading}
+              disabled={isLoading}
             />
           </div>
           <div>
@@ -149,13 +151,13 @@ const Activities = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2 font-sans font-medium" htmlFor="crop">
+            <label className="block text-gray-700 mb-2 font-sans font-medium" htmlFor="crop_id">
               Associated Crop
             </label>
             <select
-              id="crop"
-              name="crop"
-              value={form.crop}
+              id="crop_id"
+              name="crop_id"
+              value={form.crop_id}
               onChange={handleInputChange}
               className="w-full p-3 border border-green-500 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm font-sans"
               required
@@ -194,15 +196,15 @@ const Activities = () => {
               <path
                 className="opacity-75"
                 fill="currentColor"
-                d="M4 12a8 8 0 018-8 8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                d="M12 2a10 10 0 0110 10h-2a8 8 0 00-8-8V2z"
               ></path>
             </svg>
           ) : null}
-          {isLoading ? 'Logging...' : form.id ? 'Update Activity' : 'Log Activity'}
+          {isLoading ? 'Logging...' : form.id ? 'Update Activity' : 'Add Activity'}
         </button>
       </div>
       <div>
-        <h3 className-teacher="text-xl font-medium text-gray-700 mb-4 font-sans">Activity List</h3>
+        <h3 className="text-xl font-medium text-gray-700 mb-4 font-sans">Activity List</h3>
         {isLoading && !activities.length ? (
           <p className="text-gray-600 font-sans">Loading...</p>
         ) : activities.length === 0 ? (
@@ -223,9 +225,7 @@ const Activities = () => {
                   <tr key={activity.id} className="border-b">
                     <td className="p-3 font-sans text-gray-900">{activity.description}</td>
                     <td className="p-3 font-sans text-gray-900">{activity.date}</td>
-                    <td className="p-3 font-sans text-gray-900">
-                      {crops.find((crop) => crop.id === activity.crop.id)?.name || 'Unknown'}
-                    </td>
+                    <td className="p-3 font-sans text-gray-900">{activity.crop?.name || 'Unknown'}</td>
                     <td className="p-3 flex space-x-2">
                       <button
                         onClick={() => handleEdit(activity)}
@@ -236,7 +236,7 @@ const Activities = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(activity.id)}
-                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 font-sans"
+                        className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 font-sans"
                         disabled={isLoading}
                       >
                         Delete
