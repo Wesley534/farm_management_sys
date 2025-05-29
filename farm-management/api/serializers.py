@@ -25,11 +25,21 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Resource
-        fields = ['id', 'user', 'name', 'quantity', 'type']
+        fields = ['id', 'user', 'name', 'quantity', 'type', 'unit', 'usage_status']
 
     def validate_quantity(self, value):
         if value < 0:
             raise serializers.ValidationError("Quantity cannot be negative.")
+        return value
+
+    def validate_unit(self, value):
+        if value not in [choice[0] for choice in Resource.UNIT_CHOICES]:
+            raise serializers.ValidationError("Invalid unit.")
+        return value
+
+    def validate_usage_status(self, value):
+        if value not in [choice[0] for choice in Resource.USAGE_STATUS_CHOICES]:
+            raise serializers.ValidationError("Invalid usage status.")
         return value
 
     def create(self, validated_data):
