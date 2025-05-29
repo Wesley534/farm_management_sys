@@ -104,33 +104,6 @@ The frontend will run at: [http://localhost:5173/](http://localhost:5173/)
 
 ---
 
-## 🔗 Integration Notes
-
-- Ensure CORS is enabled in Django settings:
-  - Install: `pip install django-cors-headers`
-  - Add to `INSTALLED_APPS` and `MIDDLEWARE`
-  - Example settings:
-
-    ```python
-    INSTALLED_APPS = [
-        ...
-        'corsheaders',
-        ...
-    ]
-
-    MIDDLEWARE = [
-        'corsheaders.middleware.CorsMiddleware',
-        ...
-    ]
-
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:5173",
-    ]
-    ```
-
-- Ensure both servers are running when testing frontend-backend communication.
-
----
 
 
 
