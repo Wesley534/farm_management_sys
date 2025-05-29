@@ -1,5 +1,8 @@
 from django.urls import path
 from .views import (
+    UserInfoView,
+    RegisterView,
+    LoginView,
     CropListCreate,
     CropDetail,
     ResourceListCreate,
@@ -8,11 +11,10 @@ from .views import (
     ActivityDetail,
     NotificationList,
     NotificationMarkRead,
-    LoginView,
-    RegisterView,
 )
 
 urlpatterns = [
+    path('user/', UserInfoView.as_view(), name='user-info'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('crops/', CropListCreate.as_view(), name='crop-list-create'),

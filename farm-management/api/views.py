@@ -8,11 +8,21 @@ from rest_framework.authtoken.models import Token
 from .models import Crop, Resource, Activity, Notification
 from .serializers import CropSerializer, ResourceSerializer, ActivitySerializer, NotificationSerializer
 
+class UserInfoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            'username': user.username,
+            'email': user.email,
+        })
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        print("Register request data:", request.data)  # Debug
+        print("Register request data:", request.data)
         username = request.data.get('username')
         password = request.data.get('password')
         confirm_password = request.data.get('confirm_password')
