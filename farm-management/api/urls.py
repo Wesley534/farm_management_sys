@@ -9,9 +9,11 @@ from .views import (
     NotificationList,
     NotificationMarkRead,
     LoginView,
+    RegisterView,
 )
 
 urlpatterns = [
+    path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('crops/', CropListCreate.as_view(), name='crop-list-create'),
     path('crops/<int:pk>/', CropDetail.as_view(), name='crop-detail'),
