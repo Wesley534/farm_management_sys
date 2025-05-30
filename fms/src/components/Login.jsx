@@ -19,7 +19,7 @@ const Login = ({ setToken }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', {
+      const response = await axios.post('https://farm-management-g6yy.onrender.com/api/login/', {
         username,
         password,
       });
@@ -48,7 +48,7 @@ const Login = ({ setToken }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/register/', {
+      const response = await axios.post('https://farm-management-g6yy.onrender.com/api/register/', {
         username,
         password,
         confirm_password: confirmPassword,
