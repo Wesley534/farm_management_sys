@@ -9,7 +9,7 @@ services:
     plan: free
     name: farm-management
     runtime: python
-    rootDir: farm_management               # This points to the second folder with manage.py
+    rootDir: farm-management               # This points to the second folder with manage.py
     buildCommand: ./build.sh
     startCommand: >
       python -m gunicorn farm_management.asgi:application
