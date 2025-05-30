@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from django.views.decorators.csrf import csrf_exempt
 from .models import Crop, Resource, Activity, Notification
 from .serializers import CropSerializer, ResourceSerializer, ActivitySerializer, NotificationSerializer
 
@@ -21,21 +22,18 @@ class UserInfoView(APIView):
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
+    @csrf_exempt
     def post(self, request):
         print("Register request data:", request.data)
         username = request.data.get('username')
         password = request.data.get('password')
         confirm_password = request.data.get('confirm_password')
-
         if not username or not password or not confirm_password:
             return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
-        
         if password != confirm_password:
             return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
-        
         if User.objects.filter(username=username).exists():
             return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-        
         try:
             user = User.objects.create_user(username=username, password=password)
             token, created = Token.objects.get_or_create(user=user)
@@ -46,11 +44,11 @@ class RegisterView(APIView):
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
+    @csrf_exempt
     def post(self, request):
         print("Login request data:", request.data)
         username = request.data.get('username')
         password = request.data.get('password')
-        print("Attempting to authenticate:", username)
         user = authenticate(username=username, password=password)
         if user:
             token, created = Token.objects.get_or_create(user=user)
