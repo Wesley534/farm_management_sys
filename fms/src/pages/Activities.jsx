@@ -21,7 +21,7 @@ const Activities = () => {
 
   const fetchCrops = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/crops/');
+      const response = await axios.get('https://farm-management-g6yy.onrender.com/api/crops/');
       setCrops(response.data);
     } catch (err) {
       setError('Failed to fetch your crops');
@@ -31,7 +31,7 @@ const Activities = () => {
   const fetchActivities = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:8000/api/activities/');
+      const response = await axios.get('https://farm-management-g6yy.onrender.com/api/activities/');
       setActivities(response.data);
     } catch (err) {
       setError('Failed to fetch your activities');
@@ -60,10 +60,10 @@ const Activities = () => {
 
     try {
       if (form.id) {
-        await axios.put(`http://localhost:8000/api/activities/${form.id}/`, data);
+        await axios.put(`https://farm-management-g6yy.onrender.com/api/activities/${form.id}/`, data);
         setSuccess('Activity updated successfully!');
       } else {
-        await axios.post('http://localhost:8000/api/activities/', data);
+        await axios.post('https://farm-management-g6yy.onrender.com/api/activities/', data);
         setSuccess('Activity added successfully!');
       }
       fetchActivities();
@@ -90,7 +90,7 @@ const Activities = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.delete(`http://localhost:8000/api/activities/${id}/`);
+      await axios.delete(`https://farm-management-g6yy.onrender.com/api/activities/${id}/`);
       setSuccess('Activity deleted successfully!');
       fetchActivities();
     } catch (err) {

@@ -44,7 +44,7 @@ const Resources = () => {
   const fetchResources = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:8000/api/resources/', {
+      const response = await axios.get('https://farm-management-g6yy.onrender.com/api/resources/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       });
       setResources(response.data);
@@ -76,12 +76,12 @@ const Resources = () => {
       };
 
       if (form.id) {
-        await axios.put(`http://localhost:8000/api/resources/${form.id}/`, data, {
+        await axios.put(`https://farm-management-g6yy.onrender.com/api/resources/${form.id}/`, data, {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         });
         setSuccess('Resource updated successfully!');
       } else {
-        await axios.post('http://localhost:8000/api/resources/', data, {
+        await axios.post('https://farm-management-g6yy.onrender.com/api/resources/', data, {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         });
         setSuccess('Resource added successfully!');
@@ -117,7 +117,7 @@ const Resources = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.delete(`http://localhost:8000/api/resources/${id}/`, {
+      await axios.delete(`https://farm-management-g6yy.onrender.com/api/resources/${id}/`, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       });
       setSuccess('Resource deleted successfully!');

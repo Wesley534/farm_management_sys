@@ -16,7 +16,7 @@ const Notification = () => {
     setIsLoading(true);
     setError('');
     try {
-      const response = await axios.get('http://localhost:8000/api/notifications/');
+      const response = await axios.get('https://farm-management-g6yy.onrender.com/api/notifications/');
       console.log('Notifications response:', response.data); // Debug
       setNotifications(response.data || []);
     } catch (err) {
@@ -51,7 +51,7 @@ const Notification = () => {
 
   const markAsRead = async (id) => {
     try {
-      await axios.post(`http://localhost:8000/api/notifications/${id}/read/`);
+      await axios.post(`https://farm-management-g6yy.onrender.com/api/notifications/${id}/read/`);
       setNotifications(notifications.map(n => n.id === id ? { ...n, is_read: true } : n));
     } catch (err) {
       console.error('Mark as read error:', err.response?.data); // Debug

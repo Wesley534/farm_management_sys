@@ -27,16 +27,16 @@ const Dashboard = () => {
     setIsLoading(true);
     try {
       const [userResponse, cropsResponse, resourcesResponse, activitiesResponse] = await Promise.all([
-        axios.get('http://localhost:8000/api/user/', {
+        axios.get('https://farm-management-g6yy.onrender.com/api/user/', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         }),
-        axios.get('http://localhost:8000/api/crops/', {
+        axios.get('https://farm-management-g6yy.onrender.com/api/crops/', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         }),
-        axios.get('http://localhost:8000/api/resources/', {
+        axios.get('https://farm-management-g6yy.onrender.com/api/resources/', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         }),
-        axios.get('http://localhost:8000/api/activities/', {
+        axios.get('https://farm-management-g6yy.onrender.com/api/activities/', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         }),
       ]);

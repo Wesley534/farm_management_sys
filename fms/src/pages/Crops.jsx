@@ -22,7 +22,7 @@ const Crops = () => {
   const fetchCrops = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:8000/api/crops/');
+      const response = await axios.get('https://farm-management-g6yy.onrender.com/api/crops/');
       setCrops(response.data);
     } catch (err) {
       setError('Failed to fetch crops');
@@ -52,10 +52,10 @@ const Crops = () => {
       };
 
       if (form.id) {
-        await axios.put(`http://localhost:8000/api/crops/${form.id}/`, data);
+        await axios.put(`https://farm-management-g6yy.onrender.com/api/crops/${form.id}/`, data);
         setSuccess('Crop updated successfully!');
       } else {
-        await axios.post('http://localhost:8000/api/crops/', data);
+        await axios.post('https://farm-management-g6yy.onrender.com/api/crops/', data);
         setSuccess('Crop added successfully!');
       }
       fetchCrops();
@@ -76,7 +76,7 @@ const Crops = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.delete(`http://localhost:8000/api/crops/${id}/`);
+      await axios.delete(`https://farm-management-g6yy.onrender.com/api/crops/${id}/`);
       setSuccess('Crop deleted successfully!');
       fetchCrops();
     } catch (err) {
